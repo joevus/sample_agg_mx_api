@@ -18,5 +18,11 @@ module SampleAgg
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    ::MXPlatformRuby.configure do |config|
+      config.username = '36f874c0-a323-4e1f-8097-f814a1541af4'
+      config.password = 'd90833afdf7c8d064c679c27f1a1f4141156a6c9'
+      config.base_url = 'https://int-api.mx.com' # in production, use 'https://api.mx.com'
+    end
   end
 end
