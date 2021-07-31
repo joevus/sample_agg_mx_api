@@ -21,7 +21,14 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
+    user_params[:id] = user_params[:mx_id]
+    mx_user = MXPlatformRuby::User.create_user(user_params)
+    mx_user_params = {}
+    mx_user_params[:mx_id] = mx_user.id
+    mx_user_params[:email] = mx_user.email
+    mx_user_params[:guid] = mx_user.guid
+
+    @user = User.new(mx_user_params)
 
     respond_to do |format|
       if @user.save
@@ -64,6 +71,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.fetch(:user, {})
+      params.fetch(:user, { }).permit(:email, :mx_id, :is_disabled, :metadata)
     end
 end

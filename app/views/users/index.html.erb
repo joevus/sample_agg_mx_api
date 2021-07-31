@@ -12,6 +12,15 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
+        <td>mx_id: <%= user.mx_id %></td>
+      </tr>
+      <tr>
+        <td>email: <%= user.email %></td>
+      </tr>
+      <tr>
+        <td>guid: <%= user.guid %></td>
+      </tr>
+      <tr>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
