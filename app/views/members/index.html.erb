@@ -12,6 +12,25 @@
   <tbody>
     <% @members.each do |member| %>
       <tr>
+        <td>id: <%= member.id %></td>
+      </tr>
+      <tr>
+        <td>mx_id: <%= member.mx_id %></td>
+      </tr>
+      <tr>
+        <td>name: <%= member.name %></td>
+      </tr>
+      <tr>
+        <td>institution_code: <%= member.institution_code %></td>
+      </tr>
+      <%
+=begin%>
+ <tr>
+        <td>guid: <%= member.guid %></td>
+      </tr> 
+<%
+=end%>
+      <tr>
         <td><%= link_to 'Show', user_member_path(member.user, member) %></td>
         <td><%= link_to 'Edit', edit_user_member_path(member.user, member) %></td>
         <td><%= link_to 'Destroy', user_member_path(member.user, member), method: :delete, data: { confirm: 'Are you sure?' } %></td>
