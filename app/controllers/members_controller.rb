@@ -21,11 +21,12 @@ class MembersController < ApplicationController
 
   # POST /members or /members.json
   def create
+    puts "\n========\nmember_params #{member_params}\n=========\n"
     @member = Member.new(member_params)
-
+    puts "\n========\nmember: #{@member}\n=========\n"
     respond_to do |format|
       if @member.save
-        format.html { redirect_to @member, notice: "Member was successfully created." }
+        format.html { redirect_to user_member_path(scoped_user, @member), notice: "Member was successfully created." }
         format.json { render :show, status: :created, location: @member }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -64,6 +65,8 @@ class MembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def member_params
-      params.fetch(:member, {})
+      member_params = params.fetch(:member, {}).permit(:name, :mx_id, :institution_code)
+      member_params[:user_id] = params[:user_id]
+      member_params
     end
 end

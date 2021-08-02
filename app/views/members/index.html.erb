@@ -12,9 +12,9 @@
   <tbody>
     <% @members.each do |member| %>
       <tr>
-        <td><%= link_to 'Show', member %></td>
-        <td><%= link_to 'Edit', edit_user_member_path(member) %></td>
-        <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', user_member_path(member.user, member) %></td>
+        <td><%= link_to 'Edit', edit_user_member_path(member.user, member) %></td>
+        <td><%= link_to 'Destroy', user_member_path(member.user, member), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
