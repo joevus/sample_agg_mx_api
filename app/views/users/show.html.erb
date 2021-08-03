@@ -1,4 +1,25 @@
 <p id="notice"><%= notice %></p>
 
+<table>
+  <thead>
+    <tr>
+      <th colspan="3">User  <%= @user.id %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td>mx_id: <%= @user.mx_id %></td>
+      </tr>
+      <tr>
+        <td>email: <%= @user.email %></td>
+      </tr>
+      <tr>
+        <td>guid: <%= @user.guid %></td>
+      </tr>
+  </tbody>
+</table>
+
+<%= link_to 'Members', user_members_path(@user) %>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

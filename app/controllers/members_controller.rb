@@ -22,10 +22,6 @@ class MembersController < ApplicationController
 
   # POST /members or /members.json
   def create
-    # puts "\n========\nmember_params[:user_guid].permitted?: #{member_params[:user_guid].permitted?}\n========\n"
-    puts "\n========\nmember_params: #{member_params}\n========\n"
-    puts "\n========\nmember_params.class: #{member_params.class}\n========\n"
-    puts "\n========\ncreate_member_options: #{MXPlatformRuby::Member.send(:create_member_options, member_params)}\n========\n"
     mx_member = MXPlatformRuby::Member.create_member(member_params)
     local_member_params = {}
     local_member_params[:guid] = mx_member.guid
@@ -99,10 +95,7 @@ class MembersController < ApplicationController
           :value => member_params[:credential_b_value]
         }
       ]
-      # member_params.permit(:credentials => [:guid, :value])
-      # member_params[:id] = member_params[:mx_id]
       member_params[:user_guid] = user_guid
-      # member_params[:user_id] = params[:user_id]
       # Workaround for permission problems with credentials.
       # TODO: figure out proper way to permission credentials field and not use .to_h
       member_params.to_h
