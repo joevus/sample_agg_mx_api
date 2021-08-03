@@ -12,6 +12,33 @@
   <% end %>
 
   <div class="form-group">
+    <%= form.label :credential_a_guid, :class => "col-xs-2 control-label" %>
+    <div class="col-xs-4">
+        <%= form.text_field :credential_a_guid, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= form.label :credential_a_value, :class => "col-xs-2 control-label" %>
+    <div class="col-xs-4">
+        <%= form.text_field :credential_a_value, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :credential_b_guid, :class => "col-xs-2 control-label" %>
+    <div class="col-xs-4">
+        <%= form.text_field :credential_b_guid, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :credential_b_value, :class => "col-xs-2 control-label" %>
+    <div class="col-xs-4">
+        <%= form.text_field :credential_b_value, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= form.label :institution_code, :class => "col-xs-2 control-label" %>
     <div class="col-xs-4">
         <%= form.text_field :institution_code, :class => "form-control" %>
@@ -22,13 +49,6 @@
     <%= form.label :mx_id, :class => "col-xs-2 control-label" %>
     <div class="col-xs-4">
         <%= form.text_field :mx_id, :class => "form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :name, :class => "col-xs-2 control-label" %>
-    <div class="col-xs-4">
-        <%= form.text_field :name, :class => "form-control" %>
     </div>
   </div>
 
