@@ -24,5 +24,7 @@ module SampleAgg
       config.password = 'd90833afdf7c8d064c679c27f1a1f4141156a6c9'
       config.base_url = 'https://int-api.mx.com' # in production, use 'https://api.mx.com'
     end
+
+    MXPlatformRuby.client.http_client.debug_dev=(Rails.logger)
   end
 end
