@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_192205) do
+ActiveRecord::Schema.define(version: 2021_08_04_210558) do
 
   create_table "members", force: :cascade do |t|
     t.integer "user_id"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2021_08_04_192205) do
     t.string "guid"
     t.string "connection_status"
     t.string "aggregated_at"
+    t.string "successfully_aggregated_at"
+    t.boolean "is_being_aggregated"
     t.index ["user_id"], name: "index_members_on_user_id"
   end
 

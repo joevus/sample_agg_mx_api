@@ -4,10 +4,12 @@ class MembersController < ApplicationController
 
   # POST /users/{user_guid}/members/{member_guid}/aggregate
   def aggregate
-    response_body = MXPlatformRuby::Member.aggregate_member(aggregation_params)
+    mxplatform_member = MXPlatformRuby::Member.aggregate_member(aggregation_params)
     @member.update(
-      :connection_status => response_body.connection_status,
-      :aggregated_at => response_body.aggregated_at
+      :aggregated_at => mxplatform_member.aggregated_at,
+      :connection_status => mxplatform_member.connection_status,
+      :is_being_aggregated => mxplatform_member.is_being_aggregated,
+      :successfully_aggregated_at => mxplatform_member.successfully_aggregated_at
     )
     redirect_to user_member_path(@user, @member)
   end
@@ -41,6 +43,8 @@ class MembersController < ApplicationController
     local_member_params[:name] = mx_member.name
     local_member_params[:status] = mx_member.status
     local_member_params[:user_id] = @user.id
+    local_member_params[:successfully_aggregated_at] = mx_member.successfully_aggregated_at
+    local_member_params[:is_being_aggregated] = mx_member.is_being_aggregated
 
     @member = Member.new(local_member_params)
     respond_to do |format|
@@ -56,10 +60,12 @@ class MembersController < ApplicationController
 
   # GET /users/{user_guid}/members/{member_guid}/status
   def status
-    response_body = MXPlatformRuby::MemberStatus.read_member_status(aggregation_params)
+    mxplatform_member = MXPlatformRuby::MemberStatus.read_member_status(aggregation_params)
     @member.update(
-      :connection_status => response_body.connection_status,
-      :aggregated_at => response_body.aggregated_at
+      :aggregated_at => mxplatform_member.aggregated_at,
+      :connection_status => mxplatform_member.connection_status,
+      :is_being_aggregated => mxplatform_member.is_being_aggregated,
+      :successfully_aggregated_at => mxplatform_member.successfully_aggregated_at
     )
     redirect_to user_member_path(@user, @member)
   end
