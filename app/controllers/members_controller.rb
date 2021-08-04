@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: %i[ show edit update destroy ]
+  before_action :set_member, only: %i[ show edit update destroy status ]
   before_action :set_user
 
   # GET /members or /members.json
@@ -24,10 +24,12 @@ class MembersController < ApplicationController
   def create
     mx_member = MXPlatformRuby::Member.create_member(member_params)
     local_member_params = {}
+    local_member_params[:aggregated_at] = mx_member.aggregated_at
     local_member_params[:guid] = mx_member.guid
     local_member_params[:institution_code] = mx_member.institution_code
     local_member_params[:mx_id] = mx_member.id
     local_member_params[:name] = mx_member.name
+    local_member_params[:status] = mx_member.status
     local_member_params[:user_id] = @user.id
 
     @member = Member.new(local_member_params)
@@ -40,6 +42,16 @@ class MembersController < ApplicationController
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /users/{user_guid}/members/{member_guid}/status
+  def status
+    response_body = MXPlatformRuby::MemberStatus.read_member_status(status_params)
+    @member.update(
+      :connection_status => response_body.connection_status,
+      :aggregated_at => response_body.aggregated_at
+    )
+    redirect_to user_member_path(@user, @member)
   end
 
   # PATCH/PUT /members/1 or /members/1.json
@@ -67,7 +79,10 @@ class MembersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @member = Member.find(params[:id])
+      member_id = params[:id] if params[:id]
+      member_id = params[:member_id] if params[:member_id]
+
+      @member = Member.find(member_id)
     end
 
     def set_user
@@ -99,6 +114,16 @@ class MembersController < ApplicationController
       # Workaround for permission problems with credentials.
       # TODO: figure out proper way to permission credentials field and not use .to_h
       member_params.to_h
+    end
+
+    def status_params
+      status_params = params.fetch(:member, {}).permit(
+        :user_id,
+        :member_id
+      )
+      status_params[:user_guid] = @user.guid
+      status_params[:member_guid] = @member.guid
+      status_params
     end
 
     def user_guid

@@ -1,4 +1,31 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Status</h1>
+<%= link_to 'Check Status', "#{user_member_path}/status" %>
+<%= render 'status', member: @member %>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3">Member  <%= @member.id %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td>aggregated_at: <%= @member.aggregated_at %></td>
+      </tr>
+      <tr>
+        <td>guid: <%= @member.guid %></td>
+      </tr>
+      <tr>
+        <td>institution_code: <%= @member.institution_code %></td>
+      </tr>
+      <tr>
+        <td>mx_id: <%= @member.mx_id %></td>
+      </tr>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_user_member_path(@member) %> |
 <%= link_to 'Back', user_members_path %>
