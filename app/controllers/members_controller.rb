@@ -1,6 +1,16 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: %i[ show edit update destroy status ]
+  before_action :set_member, only: %i[ aggregate show edit update destroy status ]
   before_action :set_user
+
+  # POST /users/{user_guid}/members/{member_guid}/aggregate
+  def aggregate
+    response_body = MXPlatformRuby::Member.aggregate_member(aggregation_params)
+    @member.update(
+      :connection_status => response_body.connection_status,
+      :aggregated_at => response_body.aggregated_at
+    )
+    redirect_to user_member_path(@user, @member)
+  end
 
   # GET /members or /members.json
   def index
@@ -46,7 +56,7 @@ class MembersController < ApplicationController
 
   # GET /users/{user_guid}/members/{member_guid}/status
   def status
-    response_body = MXPlatformRuby::MemberStatus.read_member_status(status_params)
+    response_body = MXPlatformRuby::MemberStatus.read_member_status(aggregation_params)
     @member.update(
       :connection_status => response_body.connection_status,
       :aggregated_at => response_body.aggregated_at
@@ -116,14 +126,14 @@ class MembersController < ApplicationController
       member_params.to_h
     end
 
-    def status_params
-      status_params = params.fetch(:member, {}).permit(
+    def aggregation_params
+      aggregation_params = params.fetch(:member, {}).permit(
         :user_id,
         :member_id
       )
-      status_params[:user_guid] = @user.guid
-      status_params[:member_guid] = @member.guid
-      status_params
+      aggregation_params[:user_guid] = @user.guid
+      aggregation_params[:member_guid] = @member.guid
+      aggregation_params
     end
 
     def user_guid

@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Status</h1>
+<h2>Agregation</h2>
+<%= link_to 'Aggregate', "#{user_member_path}/aggregate", :method => :post %>
 <%= link_to 'Check Status', "#{user_member_path}/status" %>
 <%= render 'status', member: @member %>
 
