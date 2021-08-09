@@ -15,4 +15,3 @@ end
 Install bundler and run `bundle install`
 
 TODO: describe db setup
-Setup up db
