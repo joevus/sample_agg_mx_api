@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
-
-<h2>Agregation</h2>
+<h1>Member <%= @member.id %></h1>
 <%= link_to 'Aggregate', "#{user_member_path}/aggregate", :method => :post %>
 <%= link_to 'Check Status', "#{user_member_path}/status" %>
 <%= render 'status', member: @member %>
@@ -8,7 +7,7 @@
 <table>
   <thead>
     <tr>
-      <th colspan="3">Member  <%= @member.id %></th>
+      <th colspan="3">Details </th>
     </tr>
   </thead>
 
