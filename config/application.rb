@@ -25,6 +25,7 @@ module SampleAgg
       config.base_url = 'https://int-api.mx.com' # in production, use 'https://api.mx.com'
     end
 
+    # see output of http requests in server logs (terminal where server is running)
     MXPlatformRuby.client.http_client.debug_dev=(Rails.logger)
   end
 end
